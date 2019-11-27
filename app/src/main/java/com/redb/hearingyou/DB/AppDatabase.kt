@@ -6,12 +6,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(
-    entities =[
-
-    ],
-    version = 1
-)
+//@Database(
+//    entities =[
+//
+//    ],
+//    version = 1
+//)
 
 abstract class AppDatabase:RoomDatabase(){
 
