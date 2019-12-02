@@ -111,7 +111,7 @@
             android:background="@drawable/button_background"
             android:text="Iniciar Sesión"
             android:textStyle="bold"
-            android:textColor="#000000"
+            android:textColor="@color/white"
 
            />
     </LinearLayout>
