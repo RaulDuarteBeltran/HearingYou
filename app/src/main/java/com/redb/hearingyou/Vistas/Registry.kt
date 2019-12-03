@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import com.google.firebase.database.FirebaseDatabase
+import com.redb.hearingyou.Modelos.Firebase.PacienteFB
 import com.redb.hearingyou.Modelos.Firebase.UsuarioFB
 import com.redb.hearingyou.R
 import java.util.*
@@ -72,12 +73,22 @@ class Registry : AppCompatActivity() {
             }
 
         btnRegistry.setOnClickListener {
+            //Aqui se registra al usuario
             val userToPush:UsuarioFB= UsuarioFB(
                 correo = etEmail.text.toString(),
                 contraseña = etPass.text.toString()
             )
             val userKey = database.getReference("App").child("usuarios").push().key
             database.getReference("App").child("usuarios").child(userKey!!).setValue(userToPush)
+
+            //Aqui se registra al paciente
+            val patientToPush:PacienteFB= PacienteFB(
+                sobrenombre = etNickName.text.toString(),
+                nombre = etUserName.text.toString(),
+                correo = etEmail.text.toString(),
+                fechaNacimiento = btnDate.text.toString()
+            )
+            database.getReference("App").child("pacientes").child(userKey).setValue(patientToPush)
 
             val intent = Intent(this, Login::class.java)
             startActivity(intent)

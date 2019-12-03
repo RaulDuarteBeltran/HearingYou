@@ -4,7 +4,7 @@ data class PacienteFB (
     var sobrenombre:String="",
     var nombre:String="",
     var correo:String="",
-    var fechaNacimiento:Int=0,
+    var fechaNacimiento:String="",
     var conversaciones:MutableMap<String,Boolean> = HashMap()
 )
 {
