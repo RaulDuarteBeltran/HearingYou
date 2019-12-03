@@ -7,14 +7,26 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.facebook.stetho.Stetho
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
 import com.redb.hearingyou.DB.AppDatabase
+import com.redb.hearingyou.Modelos.Firebase.UsuarioFB
 import com.redb.hearingyou.R
+import android.widget.Toast
+import com.google.firebase.database.ValueEventListener
+
+
 
 class Login : AppCompatActivity() {
     private lateinit var textRegistry: TextView
     private lateinit var btnLogin: Button
     private lateinit var etUser: EditText
     private lateinit var etPass: EditText
+
+    private val database:FirebaseDatabase= FirebaseDatabase.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +46,53 @@ class Login : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            val loginReference = database.getReference("App").child("usuarios").orderByChild("correo").equalTo(etUser.text.toString())
+            loginReference.addChildEventListener(object : ChildEventListener{
+                override fun onCancelled(p0: DatabaseError) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                    //user = p0.getValue(UsuarioFB::class.java)
+                    //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                    val user:UsuarioFB? = p0.getValue(UsuarioFB::class.java)
+
+                    if (user!!.validado == false)
+                        Snackbar.make(it,"El usuario aún no ha sido aprobado",Snackbar.LENGTH_LONG).show()
+                    else if (user!!.contraseña != etPass.text.toString())
+                        Snackbar.make(it,"Contraseña incorrecta",Snackbar.LENGTH_LONG).show()
+                    else
+                    {
+                        val intent = Intent(this@Login, MainActivity::class.java)
+                        startActivity(intent)
+                    }
+
+                    //loginReference.removeEventListener(this)
+                }
+
+                override fun onChildRemoved(p0: DataSnapshot) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+            })
+            loginReference.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                    if (!dataSnapshot.exists()) {
+                        Snackbar.make(it,"El usuario no existe",Snackbar.LENGTH_LONG).show()
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    throw databaseError.toException()
+                }
+            });
         }
 
     }
