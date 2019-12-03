@@ -10,6 +10,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import com.google.firebase.database.FirebaseDatabase
+import com.redb.hearingyou.Modelos.Firebase.UsuarioFB
 import com.redb.hearingyou.R
 import java.util.*
 
@@ -24,6 +26,8 @@ class Registry : AppCompatActivity() {
     private lateinit var etEmail : EditText
     private lateinit var etPass : EditText
     private lateinit var etVPass : EditText
+
+    private val database:FirebaseDatabase = FirebaseDatabase.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +72,13 @@ class Registry : AppCompatActivity() {
             }
 
         btnRegistry.setOnClickListener {
+            val userToPush:UsuarioFB= UsuarioFB(
+                correo = etEmail.text.toString(),
+                contraseña = etPass.text.toString()
+            )
+            val userKey = database.getReference("App").child("usuarios").push().key
+            database.getReference("App").child("usuarios").child(userKey!!).setValue(userToPush)
+
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
