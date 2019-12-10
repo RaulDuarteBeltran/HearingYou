@@ -16,7 +16,7 @@ import com.redb.hearingyou.Modelos.Firebase.UsuarioFB
 import com.redb.hearingyou.R
 import java.util.*
 
-class Registry : AppCompatActivity() {
+class RegistryActivity : AppCompatActivity() {
 
     private lateinit var TAG: String
     private lateinit var btnDate: Button
@@ -35,7 +35,7 @@ class Registry : AppCompatActivity() {
         setContentView(R.layout.activity_registry)
 
 
-        TAG = "Registry"
+        TAG = "RegistryActivity"
         btnDate = findViewById(R.id.btn_date)
         btnRegistry = findViewById(R.id.btn_registry)
         etNickName= findViewById(R.id.editText_nickName)
@@ -52,7 +52,7 @@ class Registry : AppCompatActivity() {
             val day = cal.get(Calendar.DAY_OF_MONTH)
 
             val dialog = DatePickerDialog(
-                this@Registry,
+                this@RegistryActivity,
                 android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                 dateListener,
                 year, month, day
@@ -90,7 +90,7 @@ class Registry : AppCompatActivity() {
             )
             database.getReference("App").child("pacientes").child(userKey).setValue(patientToPush)
 
-            val intent = Intent(this, Login::class.java)
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 

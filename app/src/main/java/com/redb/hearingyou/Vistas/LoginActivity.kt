@@ -12,15 +12,13 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.redb.hearingyou.DB.AppDatabase
 import com.redb.hearingyou.Modelos.Firebase.UsuarioFB
 import com.redb.hearingyou.R
-import android.widget.Toast
 import com.google.firebase.database.ValueEventListener
 
 
 
-class Login : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
     private lateinit var textRegistry: TextView
     private lateinit var btnLogin: Button
     private lateinit var etUser: EditText
@@ -41,7 +39,7 @@ class Login : AppCompatActivity() {
 
 
         textRegistry.setOnClickListener{
-            val intent = Intent(this, Registry::class.java)
+            val intent = Intent(this, RegistryActivity::class.java)
             startActivity(intent)
         }
 
@@ -70,8 +68,17 @@ class Login : AppCompatActivity() {
                         Snackbar.make(it,"Contraseña incorrecta",Snackbar.LENGTH_LONG).show()
                     else
                     {
-                        val intent = Intent(this@Login, MainActivity::class.java)
-                        startActivity(intent)
+                        if(user!!.tipo==0) {
+                            val intent =
+                                Intent(this@LoginActivity, PatientMainPageActivity::class.java)
+                            startActivity(intent)
+                        }
+                        else
+                        {
+                            val intent =
+                                Intent(this@LoginActivity, PsychologistMainPageActivity::class.java)
+                            startActivity(intent)
+                        }
                     }
 
                     //loginReference.removeEventListener(this)
