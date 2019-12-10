@@ -43,10 +43,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
+            android:id="@+id/Conversacion_EditText_MensajeAEnviar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="80"/>
         <Button
+            android:id="@+id/Conversacion_Button_EnviarMensaje"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Send"
