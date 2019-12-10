@@ -41,15 +41,16 @@ class PsychologistMainPageActivity:AppCompatActivity() {
                 val peticion:PeticionFB? = p0.getValue(PeticionFB::class.java)
                 peticion?.id=p0.key
 
-                val currentPetition = peticiones.get(peticiones.indexOf(peticion))
-                currentPetition.aceptada=peticion!!.aceptada
+                if(peticiones.indexOf(peticion)!=-1) {
+                    val currentPetition = peticiones.get(peticiones.indexOf(peticion))
+                    currentPetition.aceptada = peticion!!.aceptada
 
-                if(currentPetition.aceptada==true)
-                {
-                    peticiones.remove(peticion)
+                    if (currentPetition.aceptada == true) {
+                        peticiones.remove(peticion)
+                    }
+
+                    rvPeticiones.adapter?.notifyDataSetChanged()
                 }
-
-                rvPeticiones.adapter?.notifyDataSetChanged()
             }
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {

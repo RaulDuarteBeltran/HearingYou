@@ -40,6 +40,16 @@ class ConversacionActivity :AppCompatActivity() {
             adapter = ConversacionAdapter(mensajes,idUsuario)
         }
 
+        btnEnviar.setOnClickListener{
+            val mensaje = MensajeFB(idUsuario,
+                etMensajeEnviar.text.toString())
+
+            val database = FirebaseDatabase.getInstance()
+            val mensajesRef = database.getReference("App").child("mensajes").child(idConversacion)
+            val mensajeKey = mensajesRef.push().key
+            mensajesRef.child(mensajeKey.toString()).setValue(mensaje)
+        }
+
         val database = FirebaseDatabase.getInstance()
         val conversacionRef = database.getReference("App").child("mensajes").child(idConversacion)
         conversacionRef.addChildEventListener(object : ChildEventListener{
@@ -50,7 +60,7 @@ class ConversacionActivity :AppCompatActivity() {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
             override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                
             }
 
             override fun onChildAdded(p0: DataSnapshot, p1: String?) {

@@ -1,5 +1,6 @@
 package com.redb.hearingyou.Vistas.Adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
 import com.redb.hearingyou.Modelos.Firebase.PeticionFB
 import com.redb.hearingyou.R
+import com.redb.hearingyou.Vistas.ConversacionActivity
+import com.redb.hearingyou.Vistas.EXTRA_IDCONVERSACION
+import com.redb.hearingyou.Vistas.EXTRA_IDUSUARIO
 import kotlinx.android.synthetic.main.rv_peticiones_holder.view.*
 
 class PeticionesAdapter(private val peticiones: ArrayList<PeticionFB>) :
     RecyclerView.Adapter<PeticionesAdapter.PeticionesViewHolder>() {
 
-    class PeticionesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+    class PeticionesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var tvUserName: TextView
         private var btnAceptar: Button
 
@@ -40,6 +44,11 @@ class PeticionesAdapter(private val peticiones: ArrayList<PeticionFB>) :
 
                 peticionReference.child(peticion.id!!).child("idConversacion")
                     .setValue(conversacionKey)
+
+                val intent = Intent(view.context,ConversacionActivity::class.java)
+                intent.putExtra(EXTRA_IDUSUARIO,"-LvDVMHkPucblKE-Aksx")
+                intent.putExtra(EXTRA_IDCONVERSACION,conversacionKey)
+                view.context.startActivity(intent)
             }
         }
 

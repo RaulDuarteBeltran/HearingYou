@@ -11,6 +11,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".Vistas.PatientMainPageActivity"></activity>
         <activity android:name=".Vistas.PsychologistMainPageActivity"></activity>
+        <activity android:name=".Vistas.ConversacionActivity"></activity>
         <activity android:name=".Vistas.RegistryActivity" />
         <activity android:name=".Vistas.LoginActivity">
             <intent-filter>

@@ -1,9 +1,13 @@
 package com.redb.hearingyou.Vistas
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.redb.hearingyou.Modelos.Firebase.PeticionFB
 import com.redb.hearingyou.R
 
@@ -29,7 +33,26 @@ class PatientMainPageActivity : AppCompatActivity() {
 
                 //AQUI VA LA PARTE DE COMENZAR A OIR PARA ABRIR LA VENTANA DE LA CONVERSACION
 
+                val peticionReference = database.getReference("App").child("peticionesConsulta").child(petitionKey)
+                peticionReference.addValueEventListener(object : ValueEventListener{
+                    override fun onCancelled(p0: DatabaseError) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
 
+                    override fun onDataChange(p0: DataSnapshot) {
+                        var peticion:PeticionFB? = p0.getValue(PeticionFB::class.java)
+                        peticion?.id = p0.key
+
+                        if(peticion!!.aceptada==true)
+                        {
+                            val intent = Intent(this@PatientMainPageActivity,ConversacionActivity::class.java)
+                            intent.putExtra(EXTRA_IDCONVERSACION,peticion.idConversacion)
+                            intent.putExtra(EXTRA_IDUSUARIO,"-LvBQUgQ7zFpNeaP7-1R")
+
+                            startActivity(intent)
+                        }
+                    }
+                })
 
 
             }
