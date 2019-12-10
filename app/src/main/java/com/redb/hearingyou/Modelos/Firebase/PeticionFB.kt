@@ -4,7 +4,8 @@ data class PeticionFB (
     var idUsuario:String ="",
     var sobreNombre:String ="",
     var aceptada:Boolean = false,
-    var idPsicologo:String =""
+    var idPsicologo:String ="",
+    var idConversacion:String=""
 )
 {
     var id:String? = null

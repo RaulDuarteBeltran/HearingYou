@@ -30,6 +30,13 @@ class PeticionesAdapter(private val peticiones: ArrayList<PeticionFB>) :
                 peticionReference.child(peticion.id!!).child("idPsicologo")
                     .setValue("-LvDVMHkPucblKE-Aksx")
                 peticionReference.child(peticion.id!!).child("aceptada").setValue(true)
+
+                val conversacionReference = database.getReference("App").child("conversaciones")
+                val conversacionKey = conversacionReference.push().key
+                conversacionReference.child(conversacionKey.toString()).child("psicologo").setValue("-LvDVMHkPucblKE-Aksx")
+                conversacionReference.child(conversacionKey.toString()).child("paciente").setValue(peticion!!.idUsuario)
+
+                peticionReference.child(peticion.id!!).child("idConversacion").setValue(conversacionKey)
             }
         }
 

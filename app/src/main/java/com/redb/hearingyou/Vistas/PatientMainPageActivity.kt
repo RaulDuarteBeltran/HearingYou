@@ -26,6 +26,12 @@ class PatientMainPageActivity : AppCompatActivity() {
                 database.getReference("App").child("peticionesConsulta").child(petitionKey.toString()).setValue(peticion)
                 flagConsulta = true
                 consultaButton.setText("CANCELAR")
+
+                //AQUI VA LA PARTE DE COMENZAR A OIR PARA ABRIR LA VENTANA DE LA CONVERSACION
+
+
+
+
             }
             else
             {
