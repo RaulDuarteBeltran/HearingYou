@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "596177760807-rj788t4dti6g83mrue4bvrvhn7apoj2e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.redb.hearingyou",
+            "certificate_hash": "41e01861f0db7aaa44c355fc4b4b2710e7c40318"
+          }
+        },
+        {
           "client_id": "596177760807-j1rk2b5tv538of0qtrhivo3tmhioec5e.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
