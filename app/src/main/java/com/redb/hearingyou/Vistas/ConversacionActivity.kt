@@ -1,5 +1,6 @@
 package com.redb.hearingyou.Vistas
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -51,6 +52,12 @@ class ConversacionActivity :AppCompatActivity() {
             mensajesRef.child(mensajeKey.toString()).setValue(mensaje)
 
             etMensajeEnviar.setText("")
+        }
+
+        tvNombreContacto.setOnClickListener{
+            intent = Intent(this@ConversacionActivity,PsychologistProfileActivity::class.java)
+
+            startActivity(intent)
         }
 
         val database = FirebaseDatabase.getInstance()

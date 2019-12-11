@@ -10,69 +10,44 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
 import com.redb.hearingyou.Modelos.Firebase.ConversacionFB
 import com.redb.hearingyou.Modelos.Firebase.PeticionFB
+import com.redb.hearingyou.Modelos.Firebase.PsicologoFB
 import com.redb.hearingyou.R
 import com.redb.hearingyou.Vistas.ConversacionActivity
 import com.redb.hearingyou.Vistas.EXTRA_IDCONVERSACION
 import com.redb.hearingyou.Vistas.EXTRA_IDUSUARIO
 
-class PsicologosFavsAdapter(private val psicologos: ArrayList<PeticionFB>) :
-    RecyclerView.Adapter<PeticionesAdapter.PeticionesViewHolder>() {
+class PsicologosFavsAdapter(private val psicologos: ArrayList<PsicologoFB>) :
+    RecyclerView.Adapter<PsicologosFavsAdapter.PsicologosFavViewHolder>() {
 
-    class PeticionesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    class PsicologosFavViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var tvUserName: TextView
-        private var btnAceptar: Button
 
-        private lateinit var peticion: PeticionFB
+        private lateinit var psicologo: PsicologoFB
 
         init {
-            tvUserName = view.findViewById(R.id.peticionesHolder_textView_userName)
-            btnAceptar = view.findViewById(R.id.peticionesHolder_button_aceptar)
-
-            btnAceptar.setOnClickListener {
-                val database: FirebaseDatabase = FirebaseDatabase.getInstance()
-                val peticionReference = database.getReference("App").child("peticionesConsulta")
-                peticionReference.child(peticion.id!!).child("idPsicologo")
-                    .setValue("-LvDVMHkPucblKE-Aksx")
-                peticionReference.child(peticion.id!!).child("aceptada").setValue(true)
-
-                val conversacionReference = database.getReference("App").child("conversaciones")
-                val conversacionKey = conversacionReference.push().key
-
-                val conversacion = ConversacionFB(peticion!!.idUsuario,"-LvDVMHkPucblKE-Aksx",
-                    peticion!!.sobreNombre,"Matty")
-
-                conversacionReference.child(conversacionKey.toString()).setValue(conversacion)
-
-                peticionReference.child(peticion.id!!).child("idConversacion")
-                    .setValue(conversacionKey)
-
-                val intent = Intent(view.context, ConversacionActivity::class.java)
-                intent.putExtra(EXTRA_IDUSUARIO,"-LvDVMHkPucblKE-Aksx")
-                intent.putExtra(EXTRA_IDCONVERSACION,conversacionKey)
-                view.context.startActivity(intent)
-            }
+            tvUserName = view.findViewById(R.id.PsicologosFavsHolder_textView_userName)
         }
 
-        fun bind(peticion: PeticionFB) {
-            this.peticion = peticion
-            tvUserName.setText(peticion.sobreNombre)
+        fun bind(psicologo: PsicologoFB) {
+            this.psicologo = psicologo
+            tvUserName.setText(psicologo.nombre)
         }
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PeticionesViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PsicologosFavViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
             R.layout.rv_peticiones_holder,
             parent,
             false
         ) as View
 
-        return PeticionesViewHolder(view)
+        return PsicologosFavViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: PeticionesViewHolder, position: Int) {
-        holder.bind(peticiones[position])
+    override fun onBindViewHolder(holder: PsicologosFavsAdapter.PsicologosFavViewHolder, position: Int) {
+        holder.bind(psicologos[position])
     }
 
-    override fun getItemCount(): Int = peticiones.size
+    override fun getItemCount(): Int = psicologos.size
 }
