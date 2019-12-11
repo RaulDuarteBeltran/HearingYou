@@ -15,6 +15,7 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/Conversacion_TextView_NombreContacto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hearing You"

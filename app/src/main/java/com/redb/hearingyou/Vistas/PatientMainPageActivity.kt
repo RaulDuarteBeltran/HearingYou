@@ -40,16 +40,21 @@ class PatientMainPageActivity : AppCompatActivity() {
                     }
 
                     override fun onDataChange(p0: DataSnapshot) {
-                        var peticion:PeticionFB? = p0.getValue(PeticionFB::class.java)
-                        peticion?.id = p0.key
+                        if (p0.exists()) {
+                            var peticion: PeticionFB? = p0.getValue(PeticionFB::class.java)
+                            peticion?.id = p0.key
 
-                        if(peticion!!.aceptada==true)
-                        {
-                            val intent = Intent(this@PatientMainPageActivity,ConversacionActivity::class.java)
-                            intent.putExtra(EXTRA_IDCONVERSACION,peticion.idConversacion)
-                            intent.putExtra(EXTRA_IDUSUARIO,"-LvBQUgQ7zFpNeaP7-1R")
-
-                            startActivity(intent)
+                            if (peticion!!.aceptada == true) {
+                                val intent = Intent(
+                                    this@PatientMainPageActivity,
+                                    ConversacionActivity::class.java
+                                )
+                                intent.putExtra(EXTRA_IDCONVERSACION, peticion.idConversacion)
+                                intent.putExtra(EXTRA_IDUSUARIO, "-LvBQUgQ7zFpNeaP7-1R")
+                                database.getReference("App").child("peticionesConsulta")
+                                    .child(petitionKey).setValue(null)
+                                startActivity(intent)
+                            }
                         }
                     }
                 })

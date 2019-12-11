@@ -14,9 +14,8 @@ import com.redb.hearingyou.R
 import com.redb.hearingyou.Vistas.ConversacionActivity
 import com.redb.hearingyou.Vistas.EXTRA_IDCONVERSACION
 import com.redb.hearingyou.Vistas.EXTRA_IDUSUARIO
-import kotlinx.android.synthetic.main.rv_peticiones_holder.view.*
 
-class PeticionesAdapter(private val peticiones: ArrayList<PeticionFB>) :
+class PsicologosFavsAdapter(private val psicologos: ArrayList<PeticionFB>) :
     RecyclerView.Adapter<PeticionesAdapter.PeticionesViewHolder>() {
 
     class PeticionesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -47,7 +46,7 @@ class PeticionesAdapter(private val peticiones: ArrayList<PeticionFB>) :
                 peticionReference.child(peticion.id!!).child("idConversacion")
                     .setValue(conversacionKey)
 
-                val intent = Intent(view.context,ConversacionActivity::class.java)
+                val intent = Intent(view.context, ConversacionActivity::class.java)
                 intent.putExtra(EXTRA_IDUSUARIO,"-LvDVMHkPucblKE-Aksx")
                 intent.putExtra(EXTRA_IDCONVERSACION,conversacionKey)
                 view.context.startActivity(intent)

@@ -3,13 +3,12 @@ package com.redb.hearingyou.Vistas
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
+import com.redb.hearingyou.Modelos.Firebase.ConversacionFB
 import com.redb.hearingyou.Modelos.Firebase.MensajeFB
 import com.redb.hearingyou.R
 import com.redb.hearingyou.Vistas.Adapters.ConversacionAdapter
@@ -22,6 +21,7 @@ class ConversacionActivity :AppCompatActivity() {
     private lateinit var rvMensajes:RecyclerView
     private lateinit var etMensajeEnviar:EditText
     private lateinit var btnEnviar:Button
+    private lateinit var tvNombreContacto:TextView
 
     private var mensajes:ArrayList<MensajeFB> = arrayListOf()
 
@@ -34,6 +34,7 @@ class ConversacionActivity :AppCompatActivity() {
 
         etMensajeEnviar = findViewById(R.id.Conversacion_EditText_MensajeAEnviar)
         btnEnviar = findViewById(R.id.Conversacion_Button_EnviarMensaje)
+        tvNombreContacto = findViewById(R.id.Conversacion_TextView_NombreContacto)
         rvMensajes = findViewById<RecyclerView>(R.id.Conversacion_recyclerView_Mensajes).apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this@ConversacionActivity)
@@ -48,11 +49,13 @@ class ConversacionActivity :AppCompatActivity() {
             val mensajesRef = database.getReference("App").child("mensajes").child(idConversacion)
             val mensajeKey = mensajesRef.push().key
             mensajesRef.child(mensajeKey.toString()).setValue(mensaje)
+
+            etMensajeEnviar.setText("")
         }
 
         val database = FirebaseDatabase.getInstance()
-        val conversacionRef = database.getReference("App").child("mensajes").child(idConversacion)
-        conversacionRef.addChildEventListener(object : ChildEventListener{
+        val MensajesRef = database.getReference("App").child("mensajes").child(idConversacion)
+        MensajesRef.addChildEventListener(object : ChildEventListener{
             override fun onCancelled(p0: DatabaseError) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
@@ -71,6 +74,22 @@ class ConversacionActivity :AppCompatActivity() {
             }
             override fun onChildRemoved(p0: DataSnapshot) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+        })
+
+        val ConversacionRef = database.getReference("App").child("conversaciones").child(idConversacion)
+        ConversacionRef.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                val conversacion:ConversacionFB? = p0.getValue(ConversacionFB::class.java)
+
+                tvNombreContacto.text =
+                    if(conversacion!!.idPaciente == idUsuario)
+                        conversacion.psicologo
+                    else
+                        conversacion.paciente
             }
         })
     }
