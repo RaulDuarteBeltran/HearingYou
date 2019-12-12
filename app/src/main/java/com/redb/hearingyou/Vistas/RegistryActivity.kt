@@ -10,10 +10,13 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import com.google.firebase.database.FirebaseDatabase
+import com.redb.hearingyou.Modelos.Firebase.PacienteFB
+import com.redb.hearingyou.Modelos.Firebase.UsuarioFB
 import com.redb.hearingyou.R
 import java.util.*
 
-class Registry : AppCompatActivity() {
+class RegistryActivity : AppCompatActivity() {
 
     private lateinit var TAG: String
     private lateinit var btnDate: Button
@@ -25,12 +28,14 @@ class Registry : AppCompatActivity() {
     private lateinit var etPass : EditText
     private lateinit var etVPass : EditText
 
+    private val database:FirebaseDatabase = FirebaseDatabase.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registry)
 
 
-        TAG = "Registry"
+        TAG = "RegistryActivity"
         btnDate = findViewById(R.id.btn_date)
         btnRegistry = findViewById(R.id.btn_registry)
         etNickName= findViewById(R.id.editText_nickName)
@@ -47,7 +52,7 @@ class Registry : AppCompatActivity() {
             val day = cal.get(Calendar.DAY_OF_MONTH)
 
             val dialog = DatePickerDialog(
-                this@Registry,
+                this@RegistryActivity,
                 android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                 dateListener,
                 year, month, day
@@ -68,7 +73,24 @@ class Registry : AppCompatActivity() {
             }
 
         btnRegistry.setOnClickListener {
-            val intent = Intent(this, Login::class.java)
+            //Aqui se registra al usuario
+            val userToPush:UsuarioFB= UsuarioFB(
+                correo = etEmail.text.toString(),
+                contraseña = etPass.text.toString()
+            )
+            val userKey = database.getReference("App").child("usuarios").push().key
+            database.getReference("App").child("usuarios").child(userKey!!).setValue(userToPush)
+
+            //Aqui se registra al paciente
+            val patientToPush:PacienteFB= PacienteFB(
+                sobrenombre = etNickName.text.toString(),
+                nombre = etUserName.text.toString(),
+                correo = etEmail.text.toString(),
+                fechaNacimiento = btnDate.text.toString()
+            )
+            database.getReference("App").child("pacientes").child(userKey).setValue(patientToPush)
+
+            val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
 

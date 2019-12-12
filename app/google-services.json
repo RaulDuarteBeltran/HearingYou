@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "596177760807",
+    "firebase_url": "https://hearingyou-4c0bd.firebaseio.com",
+    "project_id": "hearingyou-4c0bd",
+    "storage_bucket": "hearingyou-4c0bd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596177760807:android:04bd937077797ecb639402",
+        "android_client_info": {
+          "package_name": "com.redb.hearingyou"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596177760807-rj788t4dti6g83mrue4bvrvhn7apoj2e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.redb.hearingyou",
+            "certificate_hash": "41e01861f0db7aaa44c355fc4b4b2710e7c40318"
+          }
+        },
+        {
+          "client_id": "596177760807-j1rk2b5tv538of0qtrhivo3tmhioec5e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.redb.hearingyou",
+            "certificate_hash": "fd95662d99b05fb38cbbbd455d1ba18aa516949d"
+          }
+        },
+        {
+          "client_id": "596177760807-o5l11pggio9ae59nvo2j14u5b1ff3nb7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu3UGKYJvEEPeCfB_hEf5SDhvD-V3mkdQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596177760807-o5l11pggio9ae59nvo2j14u5b1ff3nb7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

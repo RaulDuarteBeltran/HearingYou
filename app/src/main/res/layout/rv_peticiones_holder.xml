@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    style="?android:listSeparatorTextViewStyle">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="35"
+            android:text="UserName:"
+            android:textSize="20dp"
+            android:layout_marginEnd="8dp"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/peticionesHolder_textView_userName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="35"
+            android:textSize="22sp"
+            android:textStyle="italic" />
+        <Button
+            android:id="@+id/peticionesHolder_button_aceptar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="30"
+            android:text="Aceptar"/>
+
+    </LinearLayout>
+
+</LinearLayout>
