@@ -1,9 +1,13 @@
 package com.redb.hearingyou.Vistas
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -11,17 +15,39 @@ import com.google.firebase.database.ValueEventListener
 import com.redb.hearingyou.Modelos.Firebase.PeticionFB
 import com.redb.hearingyou.R
 
+
 class PatientMainPageActivity : AppCompatActivity() {
     private lateinit var consultaButton:Button
     private var flagConsulta = false
     private var database:FirebaseDatabase = FirebaseDatabase.getInstance()
     private var petitionKey = ""
+    private lateinit var menubutton : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_patient_main_page)
 
         consultaButton = findViewById(R.id.btn_consulta)
+        menubutton = findViewById(R.id.menuButton)
+
+        menubutton.setOnClickListener{
+            val menu =
+                arrayOf("Perfil", "Conversaciones", "Favoritos", "Inicio", "Cerrar Sesión") // Aqui es son las opciones que contendra el menu, qui las puedes agregar i quitar
+            val builder = AlertDialog.Builder(this@PatientMainPageActivity)
+            builder.setTitle("Menu")
+            builder.setItems(menu,{_, which ->
+
+               when (menu[which]){       //Este es el switch donde al ser clicleado alguna opcion nos llevara a la sección adecuada
+                   "Perfil" -> {
+                       val intent = Intent(this, PsychologistProfileActivity::class.java)
+                       startActivity(intent)
+                   }
+               }
+
+            })
+
+            builder.show()
+        }
 
         consultaButton.setOnClickListener{
             if(!flagConsulta){
@@ -71,3 +97,5 @@ class PatientMainPageActivity : AppCompatActivity() {
         }
     }
 }
+
+
