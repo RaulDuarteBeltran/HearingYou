@@ -8,22 +8,27 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
 import com.redb.hearingyou.DB.AppDatabase
 import com.redb.hearingyou.Modelos.Firebase.PacienteFB
 import com.redb.hearingyou.Modelos.Firebase.PeticionFB
+import com.redb.hearingyou.Modelos.Firebase.PsicologoFavFB
 import com.redb.hearingyou.R
+import com.redb.hearingyou.Vistas.Adapters.PsicologosFavsAdapter
 
 
 class PatientMainPageActivity : AppCompatActivity() {
+    private lateinit var rvPsicologosFavs: RecyclerView
+
     private lateinit var consultaButton:Button
     private var flagConsulta = false
     private var database:FirebaseDatabase = FirebaseDatabase.getInstance()
     private var petitionKey = ""
     private lateinit var menubutton : ImageView
+
+    private var psicologos: ArrayList<PsicologoFavFB> = arrayListOf()
 
     private val db = AppDatabase.getAppDatabase(this)
 
@@ -33,6 +38,12 @@ class PatientMainPageActivity : AppCompatActivity() {
 
         consultaButton = findViewById(R.id.btn_consulta)
         menubutton = findViewById(R.id.menuButton)
+
+        rvPsicologosFavs = findViewById<RecyclerView>(R.id.recyclerView_Psicologos_Favoritos).apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(this@PatientMainPageActivity)
+            adapter = PsicologosFavsAdapter(psicologos)
+        }
 
         var Aplicacion = db.getAplicacionDao().getAplicacion()
 
@@ -109,6 +120,46 @@ class PatientMainPageActivity : AppCompatActivity() {
 
                 db.getAplicacionDao().setUserName(paciente!!.sobrenombre)
                 Aplicacion = db.getAplicacionDao().getAplicacion()
+            }
+        })
+
+        val psicologosFavsReference = database.getReference("App").child("favoritos")
+            .child(Aplicacion.idUser.toString())
+        psicologosFavsReference.addChildEventListener(object : ChildEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                val psicologoFav:PsicologoFavFB? = p0.getValue(PsicologoFavFB::class.java)
+                psicologoFav?.id=p0.key
+
+                if(psicologos.indexOf(psicologoFav)!=-1) {
+                    val currentPetition = psicologos.get(psicologos.indexOf(psicologoFav))
+                    currentPetition.conectado = psicologoFav!!.conectado
+
+                    if (currentPetition.conectado == false) {
+                        psicologos.remove(psicologoFav)
+                    }
+
+                    rvPsicologosFavs.adapter?.notifyDataSetChanged()
+                }
+            }
+
+            override fun onChildAdded(p0: DataSnapshot, p1: String?) {
+                val psicologoFav:PsicologoFavFB? = p0.getValue(PsicologoFavFB::class.java)
+                psicologoFav!!.id = p0.key
+                psicologos.add(psicologoFav)
+                rvPsicologosFavs.adapter?.notifyDataSetChanged()
+            }
+
+            override fun onChildRemoved(p0: DataSnapshot) {
+                val psicologoFav:PsicologoFavFB? = p0.getValue(PsicologoFavFB::class.java)
+                psicologoFav?.id=p0.key
+                psicologos.remove(psicologoFav!!)
+                rvPsicologosFavs.adapter?.notifyDataSetChanged()
             }
         })
     }
