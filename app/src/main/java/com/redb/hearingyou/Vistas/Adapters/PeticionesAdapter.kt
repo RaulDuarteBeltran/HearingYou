@@ -34,7 +34,7 @@ class PeticionesAdapter(private val peticiones: ArrayList<PeticionFB>) :
                 val peticionReference = database.getReference("App").child("peticionesConsulta")
                 peticionReference.child(peticion.id!!).child("idPsicologo")
                     .setValue("-LvDVMHkPucblKE-Aksx")
-                peticionReference.child(peticion.id!!).child("aceptada").setValue(true)
+
 
                 val conversacionReference = database.getReference("App").child("conversaciones")
                 val conversacionKey = conversacionReference.push().key
@@ -47,6 +47,7 @@ class PeticionesAdapter(private val peticiones: ArrayList<PeticionFB>) :
                 peticionReference.child(peticion.id!!).child("idConversacion")
                     .setValue(conversacionKey)
 
+                peticionReference.child(peticion.id!!).child("aceptada").setValue(true)
                 val intent = Intent(view.context,ConversacionActivity::class.java)
                 intent.putExtra(EXTRA_IDUSUARIO,"-LvDVMHkPucblKE-Aksx")
                 intent.putExtra(EXTRA_IDCONVERSACION,conversacionKey)

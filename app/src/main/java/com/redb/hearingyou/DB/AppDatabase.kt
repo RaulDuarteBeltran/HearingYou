@@ -5,17 +5,21 @@ import androidx.room.Database
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.redb.hearingyou.DB.DAOs.AplicacionDao
+import com.redb.hearingyou.DB.Entidades.AplicacionEntity
 
-//@Database(
-//    entities =[
-//
-//    ],
-//    version = 1
-//)
+@Database(
+    entities =[
+        AplicacionEntity::class
+    ],
+    version = 1
+)
 
 abstract class AppDatabase:RoomDatabase(){
 
     //Instancias de los Daos
+
+    abstract fun getAplicacionDao():AplicacionDao
 
     //Objeto singleton
     companion object {
@@ -45,7 +49,7 @@ abstract class AppDatabase:RoomDatabase(){
         fun initializeData(db: SupportSQLiteDatabase) {
             db.beginTransaction()
 
-
+            db.execSQL("INSERT INTO Aplicacion(idAplicacion) VALUES (0)")
 
             db.setTransactionSuccessful();
             db.endTransaction();
