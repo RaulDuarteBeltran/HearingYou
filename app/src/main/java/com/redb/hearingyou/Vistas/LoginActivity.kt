@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.redb.hearingyou.Modelos.Firebase.UsuarioFB
 import com.redb.hearingyou.R
 import com.google.firebase.database.ValueEventListener
-
+import com.redb.hearingyou.DB.AppDatabase
 
 
 class LoginActivity : AppCompatActivity() {
@@ -61,6 +61,7 @@ class LoginActivity : AppCompatActivity() {
 
                 override fun onChildAdded(p0: DataSnapshot, p1: String?) {
                     val user:UsuarioFB? = p0.getValue(UsuarioFB::class.java)
+                    user!!.id=p0.key
 
                     if (user!!.validado == false)
                         Snackbar.make(it,"El usuario aún no ha sido aprobado",Snackbar.LENGTH_LONG).show()
@@ -68,6 +69,8 @@ class LoginActivity : AppCompatActivity() {
                         Snackbar.make(it,"Contraseña incorrecta",Snackbar.LENGTH_LONG).show()
                     else
                     {
+                        val db= AppDatabase.getAppDatabase(this@LoginActivity)
+                        db.getAplicacionDao().logInUser(user.id.toString())
                         if(user!!.tipo==0) {
                             val intent =
                                 Intent(this@LoginActivity, PatientMainPageActivity::class.java)

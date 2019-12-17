@@ -54,9 +54,12 @@ class ConversacionActivity :AppCompatActivity() {
             etMensajeEnviar.setText("")
         }
 
+
+        var idPsicologo=""
         tvNombreContacto.setOnClickListener{
             intent = Intent(this@ConversacionActivity,PsychologistProfileActivity::class.java)
-
+            intent.putExtra(EXTRA_ID_PSICOLOGO_CONVERSACION,idPsicologo)
+            intent.putExtra(EXTRA_ID_CONVERSACION,idConversacion)
             startActivity(intent)
         }
 
@@ -94,7 +97,10 @@ class ConversacionActivity :AppCompatActivity() {
 
                 tvNombreContacto.text =
                     if(conversacion!!.idPaciente == idUsuario)
+                    {
+                        idPsicologo = conversacion.idPsicologo
                         conversacion.psicologo
+                    }
                     else
                         conversacion.paciente
             }

@@ -12,6 +12,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.redb.hearingyou.DB.AppDatabase
+import com.redb.hearingyou.Modelos.Firebase.PacienteFB
 import com.redb.hearingyou.Modelos.Firebase.PeticionFB
 import com.redb.hearingyou.R
 
@@ -23,6 +25,8 @@ class PatientMainPageActivity : AppCompatActivity() {
     private var petitionKey = ""
     private lateinit var menubutton : ImageView
 
+    private val db = AppDatabase.getAppDatabase(this)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_patient_main_page)
@@ -30,9 +34,11 @@ class PatientMainPageActivity : AppCompatActivity() {
         consultaButton = findViewById(R.id.btn_consulta)
         menubutton = findViewById(R.id.menuButton)
 
+        var Aplicacion = db.getAplicacionDao().getAplicacion()
+
         menubutton.setOnClickListener{
             val menu =
-                arrayOf("Perfil", "Conversaciones", "Favoritos", "Inicio", "Cerrar Sesión") // Aqui es son las opciones que contendra el menu, qui las puedes agregar i quitar
+                arrayOf("Perfil", "Conversaciones", "Inicio", "Cerrar Sesión") // Aqui es son las opciones que contendra el menu, qui las puedes agregar i quitar
             val builder = AlertDialog.Builder(this@PatientMainPageActivity)
             builder.setTitle("Menu")
             builder.setItems(menu,{_, which ->
@@ -43,16 +49,14 @@ class PatientMainPageActivity : AppCompatActivity() {
                        startActivity(intent)
                    }
                }
-
             })
-
             builder.show()
         }
 
         consultaButton.setOnClickListener{
             if(!flagConsulta){
                 petitionKey = database.getReference("App").child("peticionesConsulta").push().key.toString()
-                val peticion:PeticionFB = PeticionFB("-LvBQUgQ7zFpNeaP7-1R","red")
+                val peticion:PeticionFB = PeticionFB(Aplicacion.idUser.toString(),Aplicacion.userName.toString())
                 database.getReference("App").child("peticionesConsulta").child(petitionKey.toString()).setValue(peticion)
                 flagConsulta = true
                 consultaButton.setText("CANCELAR")
@@ -76,7 +80,7 @@ class PatientMainPageActivity : AppCompatActivity() {
                                     ConversacionActivity::class.java
                                 )
                                 intent.putExtra(EXTRA_IDCONVERSACION, peticion.idConversacion)
-                                intent.putExtra(EXTRA_IDUSUARIO, "-LvBQUgQ7zFpNeaP7-1R")
+                                intent.putExtra(EXTRA_IDUSUARIO, Aplicacion.idUser.toString())
                                 database.getReference("App").child("peticionesConsulta")
                                     .child(petitionKey).setValue(null)
                                 startActivity(intent)
@@ -95,7 +99,20 @@ class PatientMainPageActivity : AppCompatActivity() {
                 consultaButton.setText("CONSULTAR")
             }
         }
+        val pacienteReference = database.getReference("App").child("pacientes").child(Aplicacion.idUser.toString())
+        pacienteReference.addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onCancelled(p0: DatabaseError) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+            override fun onDataChange(p0: DataSnapshot) {
+                val paciente:PacienteFB? = p0.getValue(PacienteFB::class.java)
+
+                db.getAplicacionDao().setUserName(paciente!!.sobrenombre)
+                Aplicacion = db.getAplicacionDao().getAplicacion()
+            }
+        })
     }
+
 }
 
 
