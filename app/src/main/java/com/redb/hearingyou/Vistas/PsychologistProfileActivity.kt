@@ -11,6 +11,8 @@ import com.redb.hearingyou.Modelos.Firebase.PsicologoFB
 import com.redb.hearingyou.R
 import java.time.temporal.ValueRange
 
+const val EXTRA_ID_PSICOLOGO_CONVERSACION="com.example.HearingYou.EXTRA_ID_PSICOLOGO_CONVERSACION"
+
 class PsychologistProfileActivity : AppCompatActivity() {
 
     private lateinit var textName : TextView
@@ -26,7 +28,8 @@ class PsychologistProfileActivity : AppCompatActivity() {
         textBirthday = findViewById(R.id.perfilpsicologo_textview_fechadenacimiento)
 
         val database = FirebaseDatabase.getInstance()
-        val dbRef = database.getReference("App").child("psicologos").child("-LvDVMHkPucblKE-Aksx")
+        val idPsicologo = intent.getStringExtra(EXTRA_ID_PSICOLOGO_CONVERSACION)
+        val dbRef = database.getReference("App").child("psicologos").child(idPsicologo)
 
         dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(p0: DatabaseError) {

@@ -9,8 +9,11 @@ interface AplicacionDao {
     @Query("SELECT * FROM Aplicacion WHERE idAplicacion=0")
     fun getAplicacion():AplicacionEntity
 
-    @Query("UPDATE Aplicacion SET idUser=:idUser,  userName=:userName")
-    fun logInUser(idUser:String, userName:String)
+    @Query("UPDATE Aplicacion SET idUser=:idUser")
+    fun logInUser(idUser:String)
+
+    @Query("UPDATE Aplicacion SET userName=:userName")
+    fun setUserName(userName:String)
 
     @Query("UPDATE Aplicacion SET idUser=null, userName=null")
     fun logOutUser()
