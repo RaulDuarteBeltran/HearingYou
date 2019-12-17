@@ -48,6 +48,12 @@ class PeticionesAdapter(private val peticiones: ArrayList<PeticionFB>) :
 
                 conversacionReference.child(conversacionKey.toString()).setValue(conversacion)
 
+                database.getReference("App").child("pacientes").child(peticion!!.idUsuario)
+                    .child("conversaciones").child(conversacionKey.toString()).setValue(true)
+
+                database.getReference("App").child("psicologos").child(Aplicacion.idUser.toString())
+                    .child("conversaciones").child(conversacionKey.toString()).setValue(true)
+
                 peticionReference.child(peticion.id!!).child("idConversacion")
                     .setValue(conversacionKey)
 
