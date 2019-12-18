@@ -1,5 +1,6 @@
 package com.redb.hearingyou.Vistas
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Color
@@ -12,6 +13,7 @@ import android.widget.Button
 import android.widget.EditText
 import com.google.firebase.database.FirebaseDatabase
 import com.redb.hearingyou.Modelos.Firebase.PacienteFB
+import com.redb.hearingyou.Modelos.Firebase.PsicologoFB
 import com.redb.hearingyou.Modelos.Firebase.UsuarioFB
 import com.redb.hearingyou.R
 import java.util.*
@@ -73,25 +75,53 @@ class RegistryActivity : AppCompatActivity() {
             }
 
         btnRegistry.setOnClickListener {
-            //Aqui se registra al usuario
-            val userToPush:UsuarioFB= UsuarioFB(
-                correo = etEmail.text.toString(),
-                contraseña = etPass.text.toString()
-            )
             val userKey = database.getReference("App").child("usuarios").push().key
-            database.getReference("App").child("usuarios").child(userKey!!).setValue(userToPush)
+            val menu =
+                arrayOf("Soy Paciente", "Soy Psicólogo") // Aqui es son las opciones que contendra el menu, qui las puedes agregar i quitar
+            val builder = AlertDialog.Builder(this@RegistryActivity)
+            builder.setTitle("Registro")
+            builder.setItems(menu,{_, which ->
 
-            //Aqui se registra al paciente
-            val patientToPush:PacienteFB= PacienteFB(
-                sobrenombre = etNickName.text.toString(),
-                nombre = etUserName.text.toString(),
-                correo = etEmail.text.toString(),
-                fechaNacimiento = btnDate.text.toString()
-            )
-            database.getReference("App").child("pacientes").child(userKey).setValue(patientToPush)
+                when (menu[which]){       //Este es el switch donde al ser clicleado alguna opcion nos llevara a la sección adecuada
+                    "Soy Psicólogo" -> {
+                        //Aqui se registra al psicologo
+                        val psicologoToPush:PsicologoFB=PsicologoFB(
+                           correo =  etEmail.text.toString(),
+                            fechaNaciemiento = btnDate.text.toString(),
+                            nombre = etUserName.text.toString()
+                        )
+                        val userToPush:UsuarioFB= UsuarioFB(
+                            correo = etEmail.text.toString(),
+                            contraseña = etPass.text.toString()
+                        )
+                        database.getReference("App").child("usuarios").child(userKey!!).setValue(userToPush)
+                        database.getReference("App").child("psicologos").child(userKey!!).setValue(psicologoToPush)
 
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
+                    }
+                    "Soy Paciente" -> {
+                        //Aqui se registra al paciente
+                        val patientToPush:PacienteFB= PacienteFB(
+                            sobrenombre = etNickName.text.toString(),
+                            nombre = etUserName.text.toString(),
+                            correo = etEmail.text.toString(),
+                            fechaNacimiento = btnDate.text.toString()
+                        )
+                        val userToPush:UsuarioFB= UsuarioFB(
+                            correo = etEmail.text.toString(),
+                            contraseña = etPass.text.toString()
+                        )
+                        database.getReference("App").child("usuarios").child(userKey!!).setValue(userToPush)
+                        database.getReference("App").child("pacientes").child(userKey!!).setValue(patientToPush)
+
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+            })
+            builder.show()
+
         }
 
     }
