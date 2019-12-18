@@ -92,7 +92,8 @@ class RegistryActivity : AppCompatActivity() {
                         )
                         val userToPush:UsuarioFB= UsuarioFB(
                             correo = etEmail.text.toString(),
-                            contraseña = etPass.text.toString()
+                            contraseña = etPass.text.toString(),
+                            tipo = 1
                         )
                         database.getReference("App").child("usuarios").child(userKey!!).setValue(userToPush)
                         database.getReference("App").child("psicologos").child(userKey!!).setValue(psicologoToPush)

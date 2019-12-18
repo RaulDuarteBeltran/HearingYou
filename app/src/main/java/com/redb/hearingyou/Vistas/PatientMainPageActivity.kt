@@ -57,6 +57,8 @@ class PatientMainPageActivity : AppCompatActivity() {
                when (menu[which]){       //Este es el switch donde al ser clicleado alguna opcion nos llevara a la sección adecuada
                    "Perfil" -> {
                        val intent = Intent(this, PsychologistProfileActivity::class.java)
+                       intent.putExtra(EXTRA_ID_PSICOLOGO_CONVERSACION,Aplicacion.idUser)
+                       intent.putExtra("EXTRA_TIPOUSUARIO",0)
                        startActivity(intent)
                    }
                    "Conversaciones"->{

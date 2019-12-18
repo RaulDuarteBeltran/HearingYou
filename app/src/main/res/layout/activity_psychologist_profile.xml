@@ -75,9 +75,10 @@
         </LinearLayout>
 
     <Button
-        android:id="@+id/perfilpsicologo_button_agregarafavoritos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Agregar a Favoritos"/>
+    android:id="@+id/perfilpsicologo_button_agregarafavoritos"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Agregar a Favoritos"/>
+
 
     </LinearLayout>
