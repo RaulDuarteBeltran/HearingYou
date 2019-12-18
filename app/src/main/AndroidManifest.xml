@@ -14,6 +14,7 @@
         <activity android:name=".Vistas.PsychologistMainPageActivity" />
         <activity android:name=".Vistas.ConversacionActivity" />
         <activity android:name=".Vistas.RegistryActivity" />
+        <activity android:name=".Vistas.ConversacionesActivity"/>
         <activity android:name=".Vistas.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

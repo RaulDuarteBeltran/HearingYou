@@ -11,24 +11,25 @@ import com.google.firebase.database.FirebaseDatabase
 import com.redb.hearingyou.Modelos.Firebase.ConversacionFB
 import com.redb.hearingyou.Modelos.Firebase.PeticionFB
 import com.redb.hearingyou.Modelos.Firebase.PsicologoFB
+import com.redb.hearingyou.Modelos.Firebase.PsicologoFavFB
 import com.redb.hearingyou.R
 import com.redb.hearingyou.Vistas.ConversacionActivity
 import com.redb.hearingyou.Vistas.EXTRA_IDCONVERSACION
 import com.redb.hearingyou.Vistas.EXTRA_IDUSUARIO
 
-class PsicologosFavsAdapter(private val psicologos: ArrayList<PsicologoFB>) :
+class PsicologosFavsAdapter(private val psicologos: ArrayList<PsicologoFavFB>) :
     RecyclerView.Adapter<PsicologosFavsAdapter.PsicologosFavViewHolder>() {
 
     class PsicologosFavViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         private var tvUserName: TextView
 
-        private lateinit var psicologo: PsicologoFB
+        private lateinit var psicologo: PsicologoFavFB
 
         init {
             tvUserName = view.findViewById(R.id.PsicologosFavsHolder_textView_userName)
         }
 
-        fun bind(psicologo: PsicologoFB) {
+        fun bind(psicologo: PsicologoFavFB) {
             this.psicologo = psicologo
             tvUserName.setText(psicologo.nombre)
         }
@@ -37,7 +38,7 @@ class PsicologosFavsAdapter(private val psicologos: ArrayList<PsicologoFB>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PsicologosFavViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.rv_peticiones_holder,
+            R.layout.rv_psicologosfavs_holder,
             parent,
             false
         ) as View
