@@ -1,36 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
+    android:orientation="vertical"
+    app:cardBackgroundColor="#E6E6E6"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="7dp"
     style="?android:listSeparatorTextViewStyle">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="35"
-            android:text="UserName:"
-            android:textSize="20dp"
-            android:layout_marginEnd="8dp"
-            android:textStyle="bold"/>
+
         <TextView
             android:id="@+id/peticionesHolder_textView_userName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="35"
-            android:textSize="22sp"
+            android:textSize="15dp"
             android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="35"
+            android:text="necesita ayuda"
+            android:textSize="15dp"
+            android:layout_marginEnd="8dp"
+            android:textStyle="bold"/>
+
         <Button
             android:id="@+id/peticionesHolder_button_aceptar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="30"
+            android:layout_weight="20"
             android:text="Aceptar"/>
 
     </LinearLayout>
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>

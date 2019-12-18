@@ -8,76 +8,71 @@
     tools:context=".Vistas.PsychologistProfileActivity">
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/psicologo"
+        android:gravity="top"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:gravity="end">
 
-            <TextView
+            <ImageView
+                android:id="@+id/star"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Nombre: "
-                android:textSize="25dp" />
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_star_border_black_24dp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
 
             <TextView
                 android:id="@+id/perfilpsicologo_textview_nombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre"
-                android:textSize="25dp" />
+                android:textColor="@color/white"
+                android:textSize="40dp" />
 
         </LinearLayout>
+    </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/perfilpsicologo_textview_correo"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:text="Correo"
+            android:textSize="25dp" />
+
+        <TextView
+            android:id="@+id/perfilpsicologo_textview_fechadenacimiento"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Correo: "
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/perfilpsicologo_textview_correo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Correo"
-                android:textSize="25dp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Fecha de Nacimiento : "
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/perfilpsicologo_textview_fechadenacimiento"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="FechaNac"
-                android:textSize="25dp" />
-
-        </LinearLayout>
-
-    <Button
-        android:id="@+id/perfilpsicologo_button_agregarafavoritos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Agregar a Favoritos"/>
+            android:text="FechaNac"
+            android:textSize="25dp" />
 
     </LinearLayout>
+
+
+
+
+
+</LinearLayout>
