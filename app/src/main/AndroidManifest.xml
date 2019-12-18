@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Vistas.PsychologistProfileActivity"></activity>
+        <activity android:name=".Vistas.PsychologistProfileActivity" />
         <activity android:name=".Vistas.PatientMainPageActivity" />
         <activity android:name=".Vistas.PsychologistMainPageActivity" />
         <activity android:name=".Vistas.ConversacionActivity" />
