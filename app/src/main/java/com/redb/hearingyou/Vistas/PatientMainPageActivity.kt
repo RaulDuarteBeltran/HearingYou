@@ -59,6 +59,10 @@ class PatientMainPageActivity : AppCompatActivity() {
                        val intent = Intent(this, PsychologistProfileActivity::class.java)
                        startActivity(intent)
                    }
+                   "Conversaciones"->{
+                       val intent = Intent(this,ConversacionesActivity::class.java)
+                       startActivity(intent)
+                   }
                }
             })
             builder.show()
